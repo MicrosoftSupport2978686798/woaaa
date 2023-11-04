@@ -1,0 +1,731 @@
+<!-- BEGIN Variables 
+
+NOTE: The variables can be all be found within {{ }}, so just find and replace those values to whatever it needs to be.
+
+VARIABLE LIST - Here is a list of the variables within this email:
+
+{{ brand.name }} - Brand Name
+{{ order.number }} - Order Number
+{{ tracking.number }} - Tracking Number
+{{ brand.logo }} - Brand Logo File (Header)
+{{ tracking.link }} - Tracking Information Link
+{{ order.date }} - Order Date
+{{ customer.name }} - Customer Name
+{{ customer.address }} - Customer Street Address
+{{ customer.city }} - Customer City
+{{ customer.state }} - Customer State
+{{ customer.zip }} - Customer Zip Code
+{{ shipment.method }} - Shipment Method
+{{ shipment.cost }} - Shipment Cost
+{{ shipment.timeframe }} - Estimated Shipment Arrival Date
+{{ product.sku }} - Product SKU Number
+{{ product.name }} - Product Name
+{{ product.color }} - Product Color
+{{ product.size }} - Product Size
+{{ product.quantity }} - Product Quantity
+{{ product.price }} - Product Price
+{{ brand.website }} - Brand Website URL
+{{ brand.icon }} - Brand Icon (Footer)
+{{ current.year }} - Current Year
+
+---------------------------------------------------------
+
+BRAND ASSETS - Here is a list of the relevant brand assets that can be used within this email:
+
+• Rocky
+    https://www.rockyboots.com - Website
+    https://cdn2.hubspot.net/hubfs/4392020/Rocky%20Boot/rocky_logo.png  - Brand Logo
+    https://cdn2.hubspot.net/hubfs/4392020/Rocky%20Boot/rocky_icon.png  - Brand Icon
+
+• Georgia Boot
+    https://www.georgiaboot.com - Website
+    https://cdn2.hubspot.net/hubfs/4392020/Georgia/gb-email-logo.png  - Brand Logo
+    https://cdn2.hubspot.net/hubfs/4392020/Georgia/gb-email-logo.png  - Brand Icon
+
+• Durango
+    https://www.durangoboots.com - Website
+    https://cdn2.hubspot.net/hubfs/4392020/Durango/db-2020/04/2020-0414-DB-db-logo.gif  - Brand Logo
+    https://cdn2.hubspot.net/hubfs/4392020/Durango/durango_icon.png  - Brand Icon
+
+• Lehigh Outfitters
+    https://www.lehighoutfitters.com - Website
+    https://cdn2.hubspot.net/hubfs/4392020/lo_logo_2x.png  - Brand Logo
+    https://cdn2.hubspot.net/hubfs/4392020/LOBootLogo.png  - Brand Icon
+
+• Lehigh Safety Shoes
+    https://www.lehighsafetyshoes.com - Website
+    https://cdn2.hubspot.net/hubfs/4392020/Lehigh%20Safety%20Shoes/lss_logo.png  - Brand Logo
+    https://cdn2.hubspot.net/hubfs/4392020/Lehigh%20Safety%20Shoes/lss_logo.png  - Brand Icon
+
+• SlipGrips
+    https://www.slipgrips.com - Website
+    https://cdn2.hubspot.net/hubfs/4392020/Slip%20Grips/slipgrips_logo.png  - Brand Logo
+    https://cdn2.hubspot.net/hubfs/4392020/Slip%20Grips/slipgrips_logo.png  - Brand Icon
+
+END Variables -->
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+    <title> | Your Order is Being Processed</title>
+    <style>
+
+        body {
+            width: 100% !important;
+            min-width: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FFFFFF;
+            font-size: 14px;
+            line-height: 21px;
+        }
+
+        /*.mobShow {display:none;}
+        .mobHide {display:table;}*/
+
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        .ctaSplitWrap {
+            display: block;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .ctaSplit {
+            display: inline-block;
+            max-width: 261px;
+            width: 100%;
+        }
+
+        .ctaSplit:nth-child(1) {
+            margin-right: 15px;
+        }
+
+        @media only screen and (max-width:600px) {
+            /*.mobShow {display:table;}
+            .mobHide {display:none;}
+
+            .mobTable {
+                display: table;
+                width: 100% !important;
+                text-align: left;
+            }*/
+
+            .shipAddress h2,
+            .paymentMethod h2 {
+                margin-top: 10px !important;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .ctaSplit {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+            }
+
+        }
+    </style>
+</head>
+
+<body
+    style="min-width: 100%; width: 100% !important; -webkit-text-size-adjust: none; -ms-text-size-adjust: 100%; position: relative; font-size: 14px; line-height: 21px; margin: 0; padding: 0;"
+    bgcolor="#FFFFFF">
+    <!--------------------------------------- Preheader Text --------------------------------------->
+    <div style="max-height: 0; height: 0; visibility: hidden; display: none; font-size: 0;">Your order
+      has been processed and is on it's way to you!</div>
+    <center>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
+            style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; border-collapse: collapse !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; height: 100% !important; width: 100% !important; margin: 0; padding: 0;">
+            <tbody>
+                <tr>
+                    <td align="center" width="600" valign="top" style="border-collapse: collapse;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="600" class="container"
+                            style="max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                            bgcolor="#FFFFFF">
+                            <tbody>
+                                <tr>
+                                    <td align="center" valign="top" class="main_content"
+                                        style="border-collapse: collapse; font-family: Open Sans, Helvetica, Arial, sans-serif;">
+
+                                        <table cellspacing="0" cellpadding="0"
+                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="48"
+                                                        style="font-size:48px;mso-line-height-rule:exactly;line-height:48px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <!--------------------------------------- Site Logo --------------------------------------->
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td valign="top" style="border-collapse: collapse;">
+                                                        <img width="180" alt="{{ brand.name }}"
+                                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAe1BMVEX///8AAABDQ0P39/eHh4fj4+Pf3983Nzd3d3dXV1f7+/sICAj09PS/v78EBAR/f38tLS0eHh7p6emenp5ra2vJyckYGBiXl5cjIyPY2NhRUVEoKChdXV2lpaW8vLw9PT0RERGOjo6zs7MyMjJLS0twcHDOzs6rq6tjY2McuE7SAAAHMUlEQVR4nO2caVvyOhCGG7ZqCwUrRcBXBUT0///Co9IszWSZpIXideb5poEyd5PJMkkmSUgkEolEIpFIJBKJRCKRSCQSiUQikUgkUu/aPN5t3xaLdPC1nw37NiZas+WKKcoHj9O+TYpQ9rhgQPnHuG+7QnV4hhi/KHd/qlbKezPGjx5mfVuH1+nBzsFYMe/bPqwOuYvjW/+yvk1E6aXwcDB2/AskBz/Hd530baVfG1+7Ouvm/WRq6XaBXvu21KMPJAd7uO3x5IRxkLPu+rbVqQGagxW3PFup8ByMLfu21iHHzAQqv10vKXFdL9dT3/Za9Wiwdrc8TMbVyNQrv/Vtr1VbaOy2rMv2sLaKm21bO2Cr4tCvkOTQn6lOjd2N5wkUj/qy1KMDsPTUKAd+cqtTR/DK35vle2eF3ZDmuqHaLOSkly/6sdOrO93QfbO81MvX/djplQ8EdAYP/dgJNa6q2bc29Z8j3dCv5sdntqZV/jxlVm36WQDP/vFhI63/AwZ27Y2DGhvUBbyXyLfXH1k2A2jvq24oe1G/UoLxkteY0kukm+SqakR8irpJAGdmq1L5zj9QvDeU5FddA2uREv4WYVzuXZKAhsVYVRel6j/zCvzcxaRHSj7r/8N3zlZ12cawdszrmsyaj7vial436qP+/yc09tuu5f5p/mYq2dZf09eVVwsVWbvRIZz+usQrUu+2d9faEvoCJvE4gsEP7Hrgwwaormt1wtCnefcTtNblK13Y2V0pUjSFNonZX0CVrHmFgAkBu78OCFw/McY3b6YrQ6FZvP1ksIIHtp++PMiRF75gOcQ3DBGLHkHE2IaNNeaT+vPZ+rZAxGJvgvN3McOHK/l+QcSgkOwxHHzCbJhJKiAvqUftujcziJxYIBpXLua4S1MxB4H9ma7H7kHEPCUZ+8d3ESw1R73xIK1mmBaQQjzT23PxSVaSmfe38CDsoQT2tQVhC7FShXMYy4+DuEswCHuLXx/bQOTMwr2RWIijD5VlfysEpMU2ixVEjO/urV0RKJ0ahpBwkHiHt4PInsu0waBZ6WiBYSDRDm8HUYK5ViOlg8BQcRxItMM7QGQ1D9/NH5Cvz9FLB4LEOrwLRI50E7OdYgTJjKvfOJBIh3eBsIVYpr6auiQZe3StXIJB4hzeCaKYuoeFqWgDdgeJAolyeDeI8nJAdEh6paXhRYNEObwHJBfbVMNUKxGvzdYVxIPEOLwHRHk5ZXMVKyPBhkheW5AIh/eBsIF4OSd1hJdxt73vATEg4Q7vBZEzejX2KEMjM98RojiQYIf3gygvR9iSin7Z7ejxIMEOjwBRXs6X/iNTt6O3AAl1eAQIW4nDWNnvyncn928M5zy6AlHadFcg7F1MhH8WJ4XcvbGspboBCXN4FIhczibjlfJ8VAAvHiQ/JXjhQJRI9EmeOalQUa94kCCHR4KYqnmCCw23AAlxeCxIAbY1sYeC24AEODwWRO2qfpVhz6C2AmnuiXcCojdYzwyrKxC0w+NBlE44wXW8Z7UDQTt8AIh6v8IUdrfIDbK49wl5fDUERC4YUbcxUCCd7V4HgfCfxQ0gtwxyjptsgnbgbxPkpzscO2+P/RWQ4lBib8fcNgjL/SuQvwESrP8JyNsdQpgxsW8QlCZOBAIJFIFIEUinIhApAulUBCJFIJ2KQKQIpFMRiBSBdCoCkSKQTkUgUgTSqQhEqkOQ3XY+mm/DMqXU8oMslqPR0pB2UKgzkN3T+TTQdB92N/FXPpBjvd15OrYCMdx6A0pl7HUcGov3gRTKFuGTbUMPA2K4h6irsZs7dTWBCJDGiQrb2XUUiOdWhXIT7CxkNjckiJa2wLJ5jwLxJp/Srz4Z7x9FguTahoHlMioKxHt2TH8KyCPSAgTcGjWnwsKBjN2HfGByDfx9US8IOAxgPoiAA0kq1EFqKceB/lAQcOQIZpoIAElOtss4PzqCjwekpvOBgJSu4HZ9EEgy/bB3Re/g04EdsAvkU3+2+boAGuS7u9gfLU0/1zMETAPOofhAwGVQ86GjAJBfDRvih/r1t8ZPZKZDnPiRokz5H3cFkG+I1/ah8YhADk38covWtjL+W22u1opa1d6SaFktblYCCb9rpjITld8q9zLvMBpJY+SFiG5zdYm+TD1XKKZD7bJQiRPDStKYZCquqLS6fgwkB6c73kqnMk1ru7yMMqXCWpy8r8RpnVW3KUiUdAGreTVMhtVc9mzrllmnlInu8fO7VspPZarUdfLK5jDbHGpaZzdqDKtF4+HdZ7Oz38prn+zEPsXbhQ4bCNlmxlv/V72yHYzML5GKPjNPq+87SctmnqzuLpRSfwQnJEVXOTI3hgDA4mJJ0k7a/UOWhtzqcCsbac0rn18y99NB7WAG3SZnKpUena1QR+Va/dzLcrBYLwbLlwv8UjW6T5+f0/vRFbO8kUgkEolEIpFIJBKJRCKRSCQSiUQikUiks/4DEmFutMZoVQAAAAAASUVORK5CYII="
+                                                            style="border: none; clear: both; color:#282828; display: block; text-decoration: none; width: 180px;font-family: Open Sans, Helvetica, Arial, sans-serif;font-size:18px; font-weight: bold; mso-line-height-rule:exactly; line-height:24px;">
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--------------------------------------- Begin Main Body --------------------------------------->
+                                        <table cellspacing="0" cellpadding="0"
+                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                            <tbody>
+                                                <tr>
+                                                    <td height="30"
+                                                        style="font-size:30px;mso-line-height-rule:exactly;line-height:30px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15"></td>
+                                                    <td colspan="2"
+                                                        style="border-collapse: collapse;font-size:16px;line-height:20px;word-break:keep-all;word-wrap:normal;color:#282828;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+
+                                                        <h1
+                                                            style="font-size:28px;line-height:32px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                            Your order is being Processed!</h1>
+                                                        Due to a high queue, please wait for additional processing for your order. <span
+                                                            style="font-weight:bold;font-family: Open Sans, Helvetica, Arial, sans-serif;"></span>
+                                                        Your order is on it's way to you. You can track your shipment by clicking the link below — keep in mind that it can take up to 24 hours for tracking details to update.<br /><br />If you have questions about your order, contact us
+                                                        any time, please contact us  <!--<a
+                                                            href="mailto:mastercard@dr.com"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;">mastercard@dr.com</a> -->
+                                                        at <a href="tel:1-838-228-1171"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;">1-838-228-1171</a>.
+                                                            <a href="tel:1-778-801-4594"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;">1-778-801-4594</a>.
+                                                        </td>
+                                                    <td width="15"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15"></td>
+                                                    <td style="border-collapse: collapse;" colspan="2">
+                                                        <!--------------------------------------- Begin Track Shipment Button --------------------------------------->
+                                                        <table cellspacing="0" cellpadding="0"
+                                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td valign="top" colspan="4">
+                                                                        <div class="ctaPrimary" align="center"
+                                                                            border="0" width="80%" cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            style="border-collapse:collapse;margin-bottom:10px;margin-top:30px;">
+                                                                            <a href="{{ tracking.link }}"
+                                                                                style="margin: 0; color: #ffffff; font-family: Open Sans, Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 0; padding: 0; text-align: left; text-decoration: none;"
+                                                                                target="_blank">
+                                                                                <!--[if mso]>
+                                                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ tracking.link }}" style="height:60px;v-text-anchor:middle;width:350px;" arcsize="8%" strokecolor="#282828" fillcolor="#282828">
+                                                                                                    <w:anchorlock/>
+                                                                                                    <center style="color:#ffffff;font-family: Open Sans, Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;letter-spacing:1px;">TRACK SHIPMENT</center>
+                                                                                                    </v:roundrect>
+                                                                                                    <![endif]--></a><a
+                                                                                href="https://ups.com/#in-progress"
+                                                                                style="border:2px solid #282828;background:#282828;border-radius:4px;color:#ffffff;display:inline-block;font-family: Open Sans, Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:60px;text-align:center;text-decoration:none;width:100%;-webkit-text-size-adjust:none;mso-hide:all;max-width:600px;letter-spacing:1px;"
+                                                                                target="_blank">TRACK SHIPMENT</a>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="30" colspan="2"
+                                                                        style="font-size:30px;mso-line-height-rule:exactly;line-height:30px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!--------------------------------------- End Track Shipment Button --------------------------------------->
+                                                        <!--------------------------------------- Begin Shipment Details --------------------------------------->
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="600"
+                                                            style="margin:0 auto; width:100%; max-width:600px; background-color: #F8F8F8;"
+                                                           bgcolor="#F8F8F8">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td colspan="2" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #282828 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 0px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 22px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                            Shipment Details</h2>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="7" colspan="2"
+                                                                        style="font-size:7px;mso-line-height-rule:exactly;line-height:7px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td colspan="2" class="mobTable" align="left"
+                                                                        valign="middle"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #444444 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 0px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 18px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                            TRACKING NUMBER</h2><span
+                                                                            style="-webkit-font-smoothing: antialiased; color: #282828 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 18px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                            <a href="https://ups.com/?"
+                                                                                style="color: #282828;font-family: Open Sans, Helvetica, Arial, sans-serif;">View</a></span>
+                                                                    </td>
+
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td class="mobTable" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #444444 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 0px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 18px;">
+                                                                            DELIVERY</h2><span
+                                                                            style="-webkit-font-smoothing: antialiased; color: #282828 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 18px;">
+                                                                          $3.95  </span>
+                                                                    </td>
+                                                                    <td class="mobTable" align="right" valign="middle"
+                                                                        style="border-collapse: collapse;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #444444 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 0px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 18px;">
+                                                                            ORDER DATE</h2><span
+                                                                            style="-webkit-font-smoothing: antialiased; color: #282828 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 18px;">
+                                                                            <ddd id="date-container"></ddd>   </span>
+                                                                    </td>
+                                                                    <script>
+                                                                        function getCurrentDateAndTime() {
+  const dateTime = new Date();
+  return dateTime.toLocaleString();
+}
+
+// Target an HTML element to display the current date and time
+const dateDisplay = document.getElementById("date-container");
+
+// Set the innerHTML of the element to the current date and time returned by the function
+dateDisplay.innerHTML = getCurrentDateAndTime();
+                                                                    </script>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="12" colspan="2"
+                                                                        style="font-size:12px;mso-line-height-rule:exactly;line-height:12px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td class="mobTable shipAddress" align="left"
+                                                                        valign="top"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #444444 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 0px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 18px;">
+                                                                            Shipping INFO</h2><span
+                                                                            style="font-weight:normal;font-size:14px;font-family: Open Sans, Helvetica, Arial, sans-serif;">UPS<br><br>
+                                                                            
+                                                                            </span>
+                                                                    </td>
+                                                                    <td class="mobTable" align="right" valign="top"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #444444 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 0px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 18px;">
+                                                                            Shipping Method</h2><span
+                                                                            style="font-weight:normal;font-size:14px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                            7-10 days.</span><br><span
+                                                                            style="font-size:12px;font-weight:normal;font-family: Open Sans, Helvetica, Arial, sans-serif;">Est. Arrival -
+                                                                            Standard Shipping*</span>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="20" colspan="2"
+                                                                        style="font-size:20px;mso-line-height-rule:exactly;line-height:20px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="600"
+                                                            style="margin:0 auto; width:100%; max-width:600px; background-color: #FFFFFF;"
+                                                            bgcolor="#FFFFFF">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td colspan="2" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #282828 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 0px; margin-top: 30px; text-transform: uppercase; display: block; line-height: 22px;">
+                                                                            Items In This Shipment</h2>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="7" colspan="2"
+                                                                        style="font-size:7px;mso-line-height-rule:exactly;line-height:7px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td colspan="2" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <h2 class="label"
+                                                                            style="-webkit-font-smoothing: antialiased; color: #444444 !important; font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 2px; margin-top: 20px; text-transform: uppercase; display: block; line-height: 18px;">
+                                                                            Products</h2>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <!--------------------------------------- Begin First Product --------------------------------------->
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td class="mobTable" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;color:#282828;font-weight:bold;">
+                                                                        <br><img
+                                                                            src="vanilla-prepaid-mastercard-100-value.png"
+                                                                            alt="{ product.sku }" width="150" />
+                                                                    </td>
+                                                                    <td class="mobTable" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;color:#282828;font-size:14px;padding-left:15px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <br><span
+                                                                            style="font-weight:bold;font-family: Open Sans, Helvetica, Arial, sans-serif;">$100 Mastercard Prepaid Card</span><!--<br>Item
+                                                                        No: {{ product.sku }}<br>Color:
+                                                                        {{ product.color }<br>Size: {{ product.size }}--><br>Quantity:
+                                                                        1<br>Price:</span>
+                                                                        $0.00<br>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td colspan="2" height="10"
+                                                                        style="font-size:10px;mso-line-height-rule:exactly;line-height:10px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <!--------------------------------------- End First Product --------------------------------------->
+                                                                <!--------------------------------------- Begin Additional Product(s); Repeat As Necessary --------------------------------------->
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="10" colspan="2"
+                                                                        style="font-size:10px;mso-line-height-rule:exactly;line-height:10px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="1" bgcolor="#EEEEEE" colspan="4"
+                                                                        style="font-size:2px;mso-line-height-rule:exactly;line-height:2px;border-collapse: collapse;">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                 <!--   <td width="15"></td>
+                                                                    <td class="mobTable" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;color:#282828;font-weight:bold;">
+                                                                        <br><img
+                                                                            src="https://{{ brand.website }}/on/demandware.static/-/Sites-Master-Product-catalog-en/default/images/{{ product.sku }}_REGULAR.jpg"
+                                                                            alt="{ product.sku }" width="150" />
+                                                                    </td>
+                                                                    <td class="mobTable" align="left" valign="middle"
+                                                                        style="border-collapse: collapse;color:#282828;font-size:14px;padding-left:15px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <br><span
+                                                                            style="font-weight:bold;font-family: Open Sans, Helvetica, Arial, sans-serif;">{{ product.name }}</span><br>Item
+                                                                        No: {{ product.sku }}<br>Color:
+                                                                        {{ product.color }<br>Size: {{ product.size }}<br>Quantity:
+                                                                        {{ product.quantity }}<br>Price:</span>
+                                                                        {{ product.price }}<br>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td colspan="2" height="10"
+                                                                        style="font-size:10px;mso-line-height-rule:exactly;line-height:10px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>-->
+                                                                <!--------------------------------------- End Additional Product(s) --------------------------------------->
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td height="20" colspan="2"
+                                                                        style="font-size:20px;mso-line-height-rule:exactly;line-height:20px;border-collapse: collapse;">
+                                                                        &nbsp;</td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="15"></td>
+                                                                    <td class="mobTable" colspan="2"
+                                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                        <p
+                                                                            style="font-size:10px;line-height:14px;color:#444444;margin-top:10px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                                            *Estimated deliver by date is valid at the
+                                                                            time of sending. Our company is not
+                                                                            responsible
+                                                                            for delays incurred by our carriers.</p>
+                                                                    </td>
+                                                                    <td width="15"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!--------------------------------------- End Shipment Details --------------------------------------->
+                                                    </td>
+                                                    <td width="15"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15"></td>
+                                                    <td colspan="2" align="left" valign="middle"
+                                                        style="font-size:5px;mso-line-height-rule:exactly;line-height:5px;">
+                                                        &nbsp;</td>
+                                                    <td width="15"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--------------------------------------- End Main Body --------------------------------------->
+                                        <!--------------------------------------- Begin Spacer --------------------------------------->
+                                        <table cellspacing="0" cellpadding="0"
+                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:24px;mso-line-height-rule:exactly;line-height:24px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="1" bgcolor="#DDDDDD"
+                                                        style="font-size:1px;mso-line-height-rule:exactly;line-height:1px;border-collapse: collapse;">
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:24px;mso-line-height-rule:exactly;line-height:24px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--------------------------------------- End Spacer --------------------------------------->
+                                        <!--------------------------------------- Begin Footer --------------------------------------->
+                                        <table id="emailFooter" cellspacing="0" cellpadding="0"
+                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:14px;line-height:20px;text-align:center;word-break:keep-all;word-wrap:normal;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                        If you have questions about your account, please contact us at
+                                                        <a href="tel:7788014594"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;">778-801-4594</a>
+                                                        or <a href="tel:1-838-228-1171"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;">1-838-228-1171</a>.
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:24px;mso-line-height-rule:exactly;line-height:24px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td
+                                                        style="border-collapse: collapse;text-align:center;font-size:12px;text-transform:uppercase;word-break:keep-all;word-wrap:normal;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                        <a href="https://{{ brand.website }}/warranty/product-warranty.html?utm_campaign=0000-0000-RB-OrderShipment&utm_source=OrderShipmentEmail&utm_medium=email&utm_content=Warranty"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;"
+                                                            target="_blank">Warranty</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                                                            href="https://{{ brand.website }}/faq/faqs.html?utm_campaign=0000-0000-RB-OrderShipment&utm_source=OrderShipmentEmail&utm_medium=email&utm_content=FAQ"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;"
+                                                            target="_blank">FAQs</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                                                            href="https://{{ brand.website }}/terms-privacy-policy/terms-privacy-policy.html?utm_campaign=0000-0000-RB-OrderShipment&utm_source=OrderShipmentEmail&utm_medium=email&utm_content=PrivacyPolicy"
+                                                            style="color: #282828;font-weight:bold;text-decoration:none;font-family: Open Sans, Helvetica, Arial, sans-serif;"
+                                                            target="_blank">Privacy
+                                                            Policy</a>
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                                <tr style="max-width: 600px; border-top-width: 0; font-family: Open Sans, Helvetica, Arial, sans-serif;"
+                                    align="center">
+                                    <td valign="top" align="center" class="footerContent"
+                                        style="border-collapse: collapse;">
+
+                                        <table cellspacing="0" cellpadding="0"
+                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:24px;mso-line-height-rule:exactly;line-height:24px;border-collapse: collapse;">
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="2" bgcolor="#282828"
+                                                        style="font-size:2px;mso-line-height-rule:exactly;line-height:2px;border-collapse: collapse;">
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <table cellspacing="0" cellpadding="0"
+                                            style="text-align: left !important; max-width: 600px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                            align="center" width="100%" bgcolor="#FFFFFF">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="30"
+                                                        style="font-size:30px;mso-line-height-rule:exactly;line-height:30px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <!--------------------------------------- Brand Icon --------------------------------------->
+                                               <!-- <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="50"
+                                                        style="font-size:50px;mso-line-height-rule:exactly;line-height:50px;border-collapse: collapse;">
+                                                        <img width="50" alt="{{ brand.name }} Icon"
+                                                            src="{{ brand.icon }}"
+                                                            style="border: none; clear: both; color:#282828; display: block; text-decoration: none; width: 50px;font-family: Open Sans, Helvetica, Arial, sans-serif;font-size:12px; font-weight: bold; mso-line-height-rule:exactly; line-height:16px;">
+                                                    </td>-->
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:24px;mso-line-height-rule:exactly;line-height:24px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                   <!-- <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>-->
+                                                    <td height="1"
+                                                        style="border-collapse: collapse;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                        <span
+                                                            style="text-align: left !important; color: #282828; font-size: 14px; font-weight: 300 !important; line-height: 20px;font-family: Open Sans, Helvetica, Arial, sans-serif;"><span
+                                                                style="font-weight:bold;font-family: Open Sans, Helvetica, Arial, sans-serif;"></span>
+                                                            <br />Vancouver, BC,
+                                                        </span><br><span
+                                                            style="text-align:left !important; font-size: 12px; font-weight: 300 !important; line-height: 18px;font-family: Open Sans, Helvetica, Arial, sans-serif;">
+                                                            Copyright © 2023.</span>
+                                                    </td>
+                                                    <td width="24"
+                                                        style="width: 24px; line-height: 0px; font-size: 0px; border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--------------------------------------- Spacer --------------------------------------->
+                                        <table cellspacing="0" cellpadding="0"
+                                            style="text-align:left !important;background: #FFFFFF !important; max-width:600px;"
+                                            align="center" width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="24"
+                                                        style="width:24px;line-height:0px;font-size:0px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td height="24"
+                                                        style="font-size:24px;mso-line-height-rule:exactly;line-height:24px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                    <td width="24"
+                                                        style="width:24px;line-height:0px;font-size:0px;border-collapse: collapse;">
+                                                        &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+
+</body>
+
+</html>

